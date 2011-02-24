@@ -12,3 +12,7 @@ From the command line:
     cd learning-javascript-tdd
     ichabod serve headless.json
 
+In the browser:
+
+    http://localhost:8000/
+
