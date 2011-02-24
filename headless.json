@@ -1,0 +1,7 @@
+{
+    "testDir": ".",
+    "reportsDir": "./reports",
+    "tests": [
+        "*.html"
+    ]
+}

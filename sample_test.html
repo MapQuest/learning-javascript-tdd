@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Sample Test</title>
+    
+    <link rel="stylesheet" href="/css/site.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jasmine.css" type="text/css" />
+    
+    <script type="text/javascript" src="/js/jasmine.js"></script>
+    <script type="text/javascript" src="/js/jasmine-html.js"></script>
+    <script type="text/javascript" src="/js/jasmine.junit_reporter.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var reporter = new jasmine.JUnitReporter();
+        
+        describe("Basic Suite", function() {
+            it("Should pass a basic truthiness test.", function() {
+                expect(true).toEqual(true);
+            });
+            
+            it("Should fail when it hits an inequal statement.", function() {
+                expect(1+1).toEqual(3);
+            });
+        });
+        
+        describe("Another Suite", function() {
+            it("Should pass this test as well.", function() {
+                expect(0).toEqual(0);
+            });
+        });
+        
+        jasmine.getEnv().addReporter(reporter);
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+    </script>
+</body>
+</html>
