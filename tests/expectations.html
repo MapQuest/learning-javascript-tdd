@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Expectations</title>
+    
+    <link rel="stylesheet" href="/css/site.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jasmine.css" type="text/css" />
+    
+    <script type="text/javascript" src="/js/jasmine.js"></script>
+    <script type="text/javascript" src="/js/jasmine-html.js"></script>
+    <script type="text/javascript" src="/js/jasmine.junit_reporter.js"></script>
+    <script type="text/javascript" src="/js/jquery-1.5.min.js"></script>
+</head>
+<body>
+    <div class="foo">
+        <span id="bar">Baz</span>
+    </div>
+    <div class="foo">
+        <span id="baz">Bar</span>
+    </div>
+    
+    <script type="text/javascript">
+        
+        var reporter = new jasmine.JUnitReporter();
+        
+        describe('jQuery CSS Selectors', function() {
+            it('Should select a single element when using the ID selector.', function() {
+                var elts = $('#bar');
+                
+                expect(elts.length).toEqual(1);
+                expect(elts[0].nodeName).toEqual('span');
+                expect(elts[0].id).toEqual('bar');
+            });
+            
+            it('Should return no matches when selecting by an element name not present.', function() {
+                var elts = $('li');
+                
+                expect(elts.length).toBeFalsy();
+            });
+        });
+        
+        jasmine.getEnv().addReporter(reporter);
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+    </script>
+</body>
+</html>

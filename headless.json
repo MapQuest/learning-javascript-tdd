@@ -2,6 +2,6 @@
     "testDir": ".",
     "reportsDir": "./reports",
     "tests": [
-        "*.html"
+        "tests/*.html"
     ]
 }
