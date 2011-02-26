@@ -2,39 +2,39 @@ var ConsoleReporter;
 
 (function() {
     ConsoleReporter = function() {
-        this.started = false;
-        this.finished = false;
     };
     
     ConsoleReporter.prototype = {
         reportRunnerResults: function(runner) {
-            this.finished = true;
             this.log("Runner Finished.");
         },
-
+        
         reportRunnerStarting: function(runner) {
-            this.started = true;
             this.log("Runner Started.");
         },
-
+        
         reportSpecResults: function(spec) {
-            var resultText = "Failed.";
+            var summary = spec.suite.description + ' : ' + spec.description,
+                resultText = "FAIL.",
+                start = spec.startTime,
+                end = new Date(),
+                duration = 'Took ' + ((end - start)/1000).toFixed(3) + ' seconds.';
             
             if (spec.results().passed()) {
-                resultText = "Passed.";
+                resultText = "PASS.";
             }
             
-            this.log(resultText);
+            this.log([summary, duration, resultText].join(' '));
         },
 
         reportSpecStarting: function(spec) {
-            this.log(spec.suite.description + ' : ' + spec.description + ' ... ');
+            spec.startTime = new Date();
         },
 
         reportSuiteResults: function(suite) {
             var results = suite.results();
             
-            this.log(suite.description + ": " + results.passedCount + " of " + results.totalCount + " passed.");
+            this.log(suite.description + " : " + results.passedCount + " of " + results.totalCount + " passed.");
         },
         
         log: function(str) {

@@ -14,3 +14,16 @@ body {
     top: 20px;
     right: 20px;
 }
+
+.console_screens {
+    width: 100%;
+}
+
+.console_screens th {
+    padding-bottom: 20px;
+}
+
+.console_screens td {
+    vertical-align: top;
+    text-align: center;
+}

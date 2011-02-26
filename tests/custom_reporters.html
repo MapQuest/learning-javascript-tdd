@@ -22,7 +22,32 @@
     
     <p>Why would we want to do so?</p>
     
-    <script type="text/javascript">        
+    <p>Unfortunately, there's no documentation to create a customer reporter. But the
+        <a href="https://github.com/pivotal/jasmine/blob/master/lib/jasmine-html.js" target="_new">TriviaReporter</a>
+        code is easy to follow, and provides us a template to create our own.</p>
+        
+    <h2>The Console Reporter</h2>
+    
+    <p>Let's say we want to leave our DOM untouched, and would rather output our results to
+        the javascript console. After stripping down the TrivialReporter to its essentials and
+        adding some basic logging, we're left with the <a href="/js/console_reporter.js">ConsoleReporter</a></p>
+        
+    <p>There is a simple spec in this page, and it uses the ConsoleReporter as its only reporter. If you're
+        using Firefox and Firebug, open it and reload the page. If you're using Safari or Chrome, open up
+        the Developer console.</p>
+    
+    <table class="console_screens">
+        <tbody>
+            <tr><th>Firefox</th><th>Chrome</th><th>Safari</th></tr>
+            <tr>
+                <td><img src="/images/firefox.png"></td>
+                <td><img src="/images/chrome.png"></td>
+                <td><img src="/images/safari.png"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <script type="text/javascript">
         describe('Banana Banana Banana', function() {
             it("Should remove this test, because it's just a placeholder.", function() {
                 
