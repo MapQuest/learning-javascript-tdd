@@ -99,7 +99,6 @@
                             writer.writeStartElement('failure');
                             writer.writeString(trace.message);
                             writer.writeEndElement();
-                            break;
                         }
                     }
                 }
