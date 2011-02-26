@@ -21,26 +21,26 @@
         <a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development">Behavior Driven Development</a>,
         which is an offshoot of Test Driven Development.</p>
     
-    <p>Ignoring the fancy buzzwords associated with BDD, the idea is that you can describe how your
+    <p>Ignoring the fancy buzzwords associated with BDD, the idea is to describe how your
         code <strong>should</strong> behave, and <strong>verify</strong> that behavior with a expectations</p>
     
-    <p>From a code perspective this is really no different than writing unit tests, but by using
+    <p>From a code perspective this is really no different than writing unit tests. By using
         different terminology it should help you think more about testing <strong>behavior</strong>
         instead of just making sure you've covered all your public methods.</p>
     
-    <p>To learn about expectations, this page contains some jasmine tests that verify that
+    <p>To learn about expectations, this page contains some jasmine specs to verify that
         jQuery's <a href="http://api.jquery.com/category/selectors/">selectors</a> are working
         as expected.</p>
     
-    <p>(You'll notice that initially these tests are failing, so let's fix them by opening up
-        tests/expectations.html in an editor, fixing the errors, and reloading the page to verify.)</p>
+    <p>You'll notice that initially these tests are failing, so let's fix them by opening up
+        tests/expectations.html in an editor, fixing the errors, and reloading the page to verify.</p>
     
     <script type="text/javascript">
         var reporter = new jasmine.JUnitReporter(); // We'll cover this custom reporter later
         
         // This is our test suite, it contains two specs. We call them specifications instead of
         // tests, because we're creating specifications about how this code should work. The
-        // important thing to note here is we're doing the --design-- of our code here.
+        // important thing to remember is we're validating the __design__ of our code.
         describe('jQuery CSS Selectors', function() {
             it('Should select a single element when using the ID selector.', function() {
                 var elts = $('#first_line');
@@ -54,12 +54,15 @@
                 // 1. toEqual('P')
                 // 2. nodeName.toLowerCase()
                 expect(elts[0].nodeName).toEqual('p');
+                
+                // Oops, we've gotten used to jQuery CSS selectors.
                 expect(elts[0].id).toEqual('#first_line');
             });
             
             it('Should return no matches when selecting by an element name not present.', function() {
                 var elts = $('li');
                 
+                // http://11heavens.com/falsy-and-truthy-in-javascript
                 expect(elts.length).toBeFalsy();
             });
         });
@@ -67,7 +70,7 @@
         jasmine.getEnv().addReporter(reporter);
         
         // These two lines get us the nice runner output on the page, and execute our tests
-        // on page load. The execute() is required, addReporter() is not.
+        // on page load. The execute() is required to run your tests, addReporter() is not.
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().execute();
     </script>
