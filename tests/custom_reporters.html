@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Banana Banana Banana</title>
+    
+    <link rel="stylesheet" href="/css/site.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jasmine.css" type="text/css" />
+    
+    <script type="text/javascript" src="/js/jasmine.js"></script>
+    <script type="text/javascript" src="/js/console_reporter.js"></script>
+</head>
+<body>
+    <a class="home_link" href="/">Back to Index</a>
+    
+    <h1>Custom Reporters</h1>
+    
+    <p>Jasmine provides the TrivialReporter out the box, which is what gets you the nice
+        HTML output in your page showing passing and failing specs.</p>
+        
+    <p>What if we want to send the test run output to another place?</p>
+    
+    <p>Why would we want to do so?</p>
+    
+    <script type="text/javascript">        
+        describe('Banana Banana Banana', function() {
+            it("Should remove this test, because it's just a placeholder.", function() {
+                
+            });
+        });
+        
+        jasmine.getEnv().addReporter(new ConsoleReporter());
+        jasmine.getEnv().execute();
+    </script>
+</body>
+</html>
