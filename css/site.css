@@ -2,10 +2,11 @@ html, body {
     font-family: "Helvetica", "Lucida Grande", "Calibri", "Arial", sans-serif;
     font-size: 16px;
     color: #333;
+    line-height: 140%;
 }
 
 body {
-    width: 800px;
+    width: 725px;
     margin: 0 auto;
 }
 
