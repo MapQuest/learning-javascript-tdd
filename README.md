@@ -16,3 +16,6 @@ In the browser:
 
     http://localhost:8000/
 
+Note: All the tests should run fine hosted by any web server, it's just static content. 
+[Ichabod](https://github.com/larrymyers/ichabod) is used to do the headless runs from the
+the command line and provides a basic static server for testing in the browser.
