@@ -42,6 +42,13 @@
                 var elts = $('#first_line');
                 
                 expect(elts.length).toEqual(1);
+                
+                // https://developer.mozilla.org/en/DOM/element.nodeName
+                // http://ejohn.org/blog/nodename-case-sensitivity/
+                //
+                // What's going to give us a more reliable test?
+                // 1. toEqual('P')
+                // 2. nodeName.toLowerCase()
                 expect(elts[0].nodeName).toEqual('p');
                 expect(elts[0].id).toEqual('#first_line');
             });
