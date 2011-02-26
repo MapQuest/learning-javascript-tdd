@@ -48,9 +48,16 @@
     </table>
     
     <script type="text/javascript">
-        describe('Banana Banana Banana', function() {
-            it("Should remove this test, because it's just a placeholder.", function() {
-                
+        describe('A Simple Spec', function() {
+            it("Should show that Math.floor rounds down.", function() {
+                expect(Math.floor(2.876)).toEqual(2);
+            });
+            
+            it("Should show that typeof returns the type of a javascript object or primitive.", function() {
+                expect(typeof "Foo.").toEqual('string');
+                expect(typeof function() {}).toEqual('function');
+                expect(typeof 1.23).toEqual('number');
+                expect(typeof []).toEqual('array'); // a common gotcha, we'll have to fix this
             });
         });
         
