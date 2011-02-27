@@ -19,8 +19,8 @@
     <h2>The Headless Browser</h2>
     
     To run our test specs on a build server we're going to need a way to load them in a browser
-    environment without actually having a browser available. This is where a headless browser
-    comes in. It simulates a DOM and provides a javascript engine to run our tests.
+    environment without actually having a browser available on the build server. This is where a 
+    headless browser comes in. It simulates a DOM and provides a javascript engine to run our tests.
     
     Currently there are two options for this:
     
@@ -33,7 +33,9 @@
         has basic SVG support and is easier to use for evaluated javascript expressions. Use which
         ever one fits your needs better. Both will work well in most cases.</p>
     
-    <p>If you find you need true cross browser testing and a real browser run your tests in, you'll
+    <h2>Real Browsers with Distributed Test Runs</h2>
+    
+    <p>If you need true cross browser testing and a real browser run your tests in, you'll
         need to evaluate options that require more setup and infrastructure:</p>
     
     <ol>
@@ -41,7 +43,8 @@
         <li><a href="http://code.google.com/p/js-test-driver/">js-test-driver</a></li>
     </ol>
     
-    
+    <p>From experience a setup like this is better for true integration testing at the application level, 
+        and works poorly for writing isolated tests for individual modules.</p>
     
     <h2>The JUnit XML Reporter</h2>
     
