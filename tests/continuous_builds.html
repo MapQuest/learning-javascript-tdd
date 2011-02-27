@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Banana Banana Banana</title>
+    <title>Continuous Build Integration</title>
     
     <link rel="stylesheet" href="/css/site.css" type="text/css" />
     <link rel="stylesheet" href="/css/jasmine.css" type="text/css" />
@@ -14,7 +14,64 @@
 <body>
     <a class="home_link" href="/">Back to Index</a>
     
-    <a href="http://stackoverflow.com/questions/442556/spec-for-junit-xml-output">JUnit XML Output</a>
-    <a href="https://github.com/searls/jasmine-maven-plugin">Jasmine Maven Plugin</a>
+    <h1>Continuous Build Integration</h1>
+    
+    <h2>The Headless Browser</h2>
+    
+    To run our test specs on a build server we're going to need a way to load them in a browser
+    environment without actually having a browser available. This is where a headless browser
+    comes in. It simulates a DOM and provides a javascript engine to run our tests.
+    
+    Currently there are two options for this:
+    
+    <ol>
+        <li><a href="http://htmlunit.sourceforge.net/">HtmlUnit</a> - Java based, Rhino javascript engine.</li>
+        <li><a href="http://zombie.labnotes.org/">Zombie.js</a> - Node.js, V8 javascript engine.</li>
+    </ol>
+    
+    <p>HtmlUnit currently has CSS support and the ability to act like Firefox or IE, while Zombie.js
+        has basic SVG support and is easier to use for evaluated javascript expressions. Use which
+        ever one fits your needs better. Both will work well in most cases.</p>
+    
+    <p>If you find you need true cross browser testing and a real browser run your tests in, you'll
+        need to evaluate options that require more setup and infrastructure:</p>
+    
+    <ol>
+        <li><a href="http://selenium-grid.seleniumhq.org/">Selenium w/ Selenium Grid</a></li>
+        <li><a href="http://code.google.com/p/js-test-driver/">js-test-driver</a></li>
+    </ol>
+    
+    
+    
+    <h2>The JUnit XML Reporter</h2>
+    
+    <p>To get test reports in our build system, we need to expose the test results somehow. Both
+    <a href="http://cruisecontrol.sourceforge.net/">Cruise Control</a> and 
+    <a href="http://jenkins-ci.org/">Jenkins</a> understand the 
+    <a href="http://stackoverflow.com/questions/442556/spec-for-junit-xml-output">JUnit XML format</a>.</p>
+    
+    <p>We can create a custom reporter that generates JUnit XML for the test results.<p>
+    
+    <p><a href="/js/jasmine.junit_reporter.js">JUnit XML Reporter</a></p>
+    
+    <p>This is a custom reporter, just like the ConsoleReporter, except that it exposes it's test
+        results so that our headless browser can access them and write them to disk.</p>
+    
+    <h2>Using Jenkins</h2>
+    
+    <p>Once we have our test results saved as files, we can point a build job at them in order to
+        generate the test reports for the build summary.</p>
+        
+    <table class="screenshots">
+        <tr>
+            <th>Jenkins Project Config</th>
+            <th>Jenkins Test Report</th>
+        </tr>
+        <tr>
+            <td><img src="/images/jenkins_project_config.png"/></td>
+            <td><img src="/images/jenkins_test_report.png"/></td>
+        </tr>
+    </table>
+    
 </body>
 </html>

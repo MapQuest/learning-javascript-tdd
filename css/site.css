@@ -17,15 +17,15 @@ body {
     right: 20px;
 }
 
-.console_screens {
+.screenshots {
     width: 100%;
 }
 
-.console_screens th {
+.screenshots th {
     padding-bottom: 20px;
 }
 
-.console_screens td {
+.screenshots td {
     vertical-align: top;
     text-align: center;
 }
