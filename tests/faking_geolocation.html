@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Faking Geolocation</title>
+    
+    <link rel="stylesheet" href="/css/site.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jasmine.css" type="text/css" />
+    
+    <script type="text/javascript" src="/js/jasmine.js"></script>
+    <script type="text/javascript" src="/js/jasmine-html.js"></script>
+    <script type="text/javascript" src="/js/jasmine.junit_reporter.js"></script>
+</head>
+<body>
+    <a class="home_link" href="/">Back to Index</a>
+    
+    <h1>Faking Geolocation</h1>
+    
+    <p>Many times we have dependencies on external services and APIs in our javascript. These
+        dependencies make our tests unreliable since they depend on these services to be accurate
+        and functional at all times.</p>
+        
+    <p>Using the <a href="http://dev.w3.org/geo/api/spec-source.html">Geolocation API</a> as an example,
+        we're going to mock out this API so that it will always return the same location, regardless of
+        the actual location of the browser running the test.</p>
+        
+    <p>This means that this test should always pass, since we know what data it expects. A similar
+        approach can get taken with AJAX requests, removing the latency of the call to the server, 
+        and removing the dependency of requiring the server to return the correct data.</p>
+        
+    <p>(Worried about server responses changing on you in a real environment? This is what integration
+        tests are for, and can afford to be slower than our specification for our code.)</p>
+    
+    <script type="text/javascript">
+        var reporter = new jasmine.JUnitReporter();
+        
+        var mockLocation = {
+            coords: { 
+                latitude: 39.97832,
+                longitude: -83.00275,
+                accuracy: 50
+            }
+        };
+        
+        describe('Geolocation', function() {
+            
+            var origProto = navigator.geolocation.__proto__;
+            
+            beforeEach(function() {
+                navigator.geolocation.__proto__ = {
+                    getCurrentPosition: function(callback) {
+                        callback(mockLocation);
+                    }
+                };
+            });
+            
+            afterEach(function() {
+                navigator.geolocation.__proto__ = origProto;
+            });
+            
+            it("Should provide the current coordinates of the browser.", function() {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var coords = position.coords;
+                    
+                    expect(coords.latitude).toEqual(39.97832);
+                    expect(coords.longitude).toEqual(-83.00275);
+                    expect(coords.accuracy).toEqual(50);
+                });
+            });
+        });
+        
+        jasmine.getEnv().addReporter(reporter);
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+    </script>
+</body>
+</html>
