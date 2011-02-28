@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Setup and Cleanup</title>
+    
+    <link rel="stylesheet" href="/css/site.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jasmine.css" type="text/css" />
+    
+    <script type="text/javascript" src="/js/jasmine.js"></script>
+    <script type="text/javascript" src="/js/jasmine-html.js"></script>
+    <script type="text/javascript" src="/js/jasmine.junit_reporter.js"></script>
+</head>
+<body>
+    <a class="home_link" href="/">Back to Index</a>
+    
+    <h1>Setup and Cleanup</h1>
+    
+    <p>Jasmine has setup and cleanup functionality, similar to JUnit's setup and teardown methods. 
+        They can execute at the Spec level, or at the Runner level if you have setup/cleanup work
+        that is common to all your specs.</p>
+    
+    <p>If you view the source of this page, you'll notice the each test for the Span Element spec
+        has to do much less work than the Anchor Element spec.</p>
+    
+    <script type="text/javascript">
+        var reporter = new jasmine.JUnitReporter();
+        
+        describe('Anchor Element', function() {
+            it("Should have an href attribute.", function() {
+                var a = document.createElement('a');
+                document.body.appendChild(a);
+                
+                expect(a.href).toEqual('');
+                
+                a.parentNode.removeChild(a);
+            });
+            
+            it('Should have a nodeName of A.', function() {
+                var a = document.createElement('a');
+                document.body.appendChild(a);
+                
+                expect(a.nodeName).toEqual('A');
+                
+                a.parentNode.removeChild(a);
+            });
+        });
+        
+        describe('Span Element', function() {
+            var span;
+            
+            beforeEach(function() {
+                span = document.createElement('span');
+                document.body.appendChild(span);
+            });
+            
+            afterEach(function() {
+                if (span) {
+                    span.parentNode.removeChild(span);
+                }
+            });
+            
+            it("It should display inline by default.", function() {
+                expect(getComputedStyle(span, null).getPropertyValue('display')).toEqual('inline');
+            });
+            
+            it("Should have a nodeName of SPAN.", function() {
+                expect(span.nodeName).toEqual('SPAN');
+            });
+        });
+        
+        jasmine.getEnv().addReporter(reporter);
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+    </script>
+</body>
+</html>
