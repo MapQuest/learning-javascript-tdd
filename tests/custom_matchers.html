@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Banana Banana Banana</title>
+    
+    <link rel="stylesheet" href="/css/site.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jasmine.css" type="text/css" />
+    
+    <script type="text/javascript" src="/js/jasmine.js"></script>
+    <script type="text/javascript" src="/js/jasmine-html.js"></script>
+    <script type="text/javascript" src="/js/jasmine.junit_reporter.js"></script>
+</head>
+<body>
+    <a class="home_link" href="/">Back to Index</a>
+    
+    <h1>Custom Matchers</h1>
+    
+    <p>We can create our own matcher functions, which allows us to do more with expectations than what the Jasmine
+        framework provides by default.</p>
+        
+    <p>If you view the source of this page, you'll see three things:</p>
+    
+    <ol>
+        <li>A custom matcher has been created to see if a floating point Number is equal to the
+            expected value, within a certain level of tolerance. This is useful when we only care about
+            floating point values being equal to a certain level of precision.</li>
+        <li>A customer matcher has been created to compare the properties of two javascript objects.</li>
+        <li>We can use these matchers either globally, or just for an individual test spec.</li>
+    
+    <script type="text/javascript">
+        var reporter = new jasmine.JUnitReporter();
+        
+        // This matcher is available throughout the entire page.
+        jasmine.Matchers.prototype.toEqualWithTolerance = function(expected, tolerance) {
+            var diff = Math.abs(this.actual - expected),
+                tolerance = tolerance || 0.001;
+
+            return (diff <= tolerance);
+        }
+        
+        describe('Custom Matchers', function() {
+            
+            // This match is only available within this "describe" block
+            beforeEach(function() {
+                this.addMatchers({
+                    toDeepEqual: function(expected) {
+                        var actual = this.actual,
+                            prop;
+                        
+                        for (prop in actual) {
+                            if (!actual.hasOwnProperty(actual)) {
+                                continue;
+                            }
+                            
+                            if (actual[prop] !== expected[prop]) {
+                                return false;
+                            }
+                        }
+                        
+                        return true;
+                    }
+                });
+            });
+            
+            it("Should compare all the properties of two objects.", function() {
+                expect({ a: 1, b: "apple" }).toDeepEqual({ b: "apple", a: 1});
+            });
+            
+            it("Should compare the values of two floating point Numbers within a certain tolerance.", function() {
+                expect(3.213456).toEqualWithTolerance(3.213000, 0.01);
+                expect(0.1234).toEqualWithTolerance(0.1235);
+            });
+        });
+        
+        jasmine.getEnv().addReporter(reporter);
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+    </script>
+</body>
+</html>
