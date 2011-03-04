@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>DOM Events</title>
+    
+    <link rel="stylesheet" href="/css/site.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jasmine.css" type="text/css" />
+    
+    <script type="text/javascript" src="/js/jquery-1.5.min.js"></script>
+    <script type="text/javascript" src="/js/jasmine.js"></script>
+    <script type="text/javascript" src="/js/jasmine-html.js"></script>
+    <script type="text/javascript" src="/js/jasmine.junit_reporter.js"></script>
+    <script type="text/javascript" src="/js/trigger_happy.js"></script>
+</head>
+<body>
+    <a class="home_link" href="/">Back to Index</a>
+    
+    <h1>DOM Events</h1>
+    
+    <p>Using <a href="https://developer.mozilla.org/en/DOM/element.dispatchEvent">dispatchEvent</a>,
+        we can simulate real mouse and keyboard events to test our event handlers.</p>
+    
+    <p>This allows us to test full code paths, instead of directly testing methods. This is especially
+        useful for testing UI widgets that are focused on user interaction.</p>
+        
+    <p>Since IE of course has a different method, <a href="http://msdn.microsoft.com/en-us/library/ms536423(VS.85).aspx">fireEvent</a>,
+        it's useful to have a cross browser library for this.</p>
+        
+    <p><a href="https://github.com/larrymyers/trigger-happy">Trigger Happy</a> - Cross browser event dispatch.</p>
+    
+    <p>Other alteratives are using jQuery's <a href="http://api.jquery.com/trigger/">trigger</a> method, or using
+        YUI3 <a href="http://developer.yahoo.com/yui/3/event/#eventsimulation">Event Simulation</a>.</p>
+    
+    <h2>Sample Test</h2>
+    
+    <p>Below is a div, and when the Jasmine test runs, it will change its text by simulating a mouse click.</p>
+    
+    <div id="test">No events triggered.</div>
+    
+    <script type="text/javascript">
+        var reporter = new jasmine.JUnitReporter();
+        
+        describe('Event Handlers', function() {
+            it("Should trigger the event handler when the link it is bound to is clicked on.", function() {
+                var div = $('#test').get(0);
+                
+                $(div).click(function(evt) {
+                    this.innerHTML = "I've been triggered by a mouse click!";
+                });
+                
+                Trigger.mouse(div, 'click');
+                
+                expect(div.innerHTML).toEqual("I've been triggered by a mouse click!");
+            });
+        });
+        
+        jasmine.getEnv().addReporter(reporter);
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+    </script>
+</body>
+</html>
