@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>AJAX and Spies</title>
+    
+    <link rel="stylesheet" href="/css/site.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jasmine.css" type="text/css" />
+    
+    <script type="text/javascript" src="/js/jquery-1.5.min.js"></script>
+    <script type="text/javascript" src="/js/jasmine.js"></script>
+    <script type="text/javascript" src="/js/jasmine-html.js"></script>
+    <script type="text/javascript" src="/js/jasmine.junit_reporter.js"></script>
+</head>
+<body>
+    <a class="home_link" href="/">Back to Index</a>
+    
+    <h1>AJAX</h1>
+    
+    <p>There are a couple of ways we can safely handle AJAX calls in our tests:</p>
+    
+    <ul>
+        <li>Always have the server running to return real data (don't do this).</li>
+        <li>Create and inject mock responses.</li>
+    </ul>
+    
+    <script type="text/javascript">
+        var reporter = new jasmine.JUnitReporter();
+        
+        var io = {
+            makeRequest: function(callback) {
+                $.getJSON("/foo.json", callback);
+            }
+        };
+        
+        describe('AJAX', function() {
+            it("Should execute a callback on response.", function() {
+                var finish = false;
+                var data;
+                
+                var mockRequest = function(callback) {
+                    finish = true;
+                    callback({ data: [4, 5] });
+                };
+                
+                var origFunc = io.makeRequest;
+                io.makeRequest = mockRequest;
+                
+                runs(function() {
+                    io.makeRequest(function(response) {
+                        data = response.data;
+                    });
+                })
+                
+                waitsFor(function() {
+                    return finish;
+                }, "Ajax call to finish.", 3000);
+                
+                runs(function() {
+                    expect(data.length).toEqual(2);
+                    expect(data[0]).toEqual(4);
+                    expect(data[1]).toEqual(5);
+                    
+                    io.makeRequest = origFunc;
+                });
+            });
+        });
+        
+        jasmine.getEnv().addReporter(reporter);
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+    </script>
+</body>
+</html>
